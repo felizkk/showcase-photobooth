@@ -26,7 +26,7 @@
 
   - name: update website files
     copy:
-      src: websource
+      src: websource/
       dest: "/var/www/html"
       mode: u=rw,g=r,o=r
 ...
