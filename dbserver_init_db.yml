@@ -1,6 +1,6 @@
 ---
 - name: MySQL Initial Database Creation
-  hosts: showcase.fedorahost
+  hosts: showcase-dbserver
   gather_facts: no
   become: yes
   become_method: sudo

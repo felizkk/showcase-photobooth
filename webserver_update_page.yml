@@ -24,15 +24,9 @@
       - absent
       - directory
 
-  - name: update index php file
-    template:
-      src: "templates/index.php.j2"
-      dest: "/var/www/html/index.php"
-
-  - name: copy the rest of html files
+  - name: update website files
     copy:
-      src: "{{ item }}"
-      dest: /var/www/html/
-    with_items:
-      - templates/ansible-tower-small.png
+      src: websource
+      dest: "/var/www/html"
+      mode: u=rw,g=r,o=r
 ...
