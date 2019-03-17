@@ -1,0 +1,52 @@
+---
+- name: MySQL Initial Database Creation
+  hosts: showcase.fedorahost
+  gather_facts: no
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: create a mysql user named ansible @ %
+    mysql_user:
+      name: ansible
+      password: redhat
+      host: "%"
+      priv: "*.*:ALL"
+      state: present
+
+  - name: create a mysql user named ansible @ localhost
+    mysql_user:
+      name: ansible
+      password: redhat
+      host: "localhost"
+      priv: "*.*:ALL"
+      state: present
+
+  - name: create database named showcase
+    mysql_db:
+      name: showcase
+      state: present
+
+  - name: copy sql file to target vm
+    copy:
+      src: templates/init_table.sql
+      dest: /tmp/init_table.sql
+
+  - name: create initial database table and entries
+    mysql_db:
+      name: showcase
+      login_user: ansible
+      login_password: redhat
+      login_unix_socket: "/var/lib/mysql/mysql.sock"
+      config_file: "/etc/my.cnf"
+      state: import
+      target: /tmp/init_table.sql
+
+  - name: test table output
+    command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
+    register: tableoutput
+
+  - name: display table output
+    debug:
+      var: tableoutput.stdout_lines
+...

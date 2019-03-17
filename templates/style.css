@@ -1,0 +1,53 @@
+body {
+    font-family: arial;
+    font-size: 12pt;
+    text-align:center;
+    margin-top:0;
+    margin-left:0;
+    margin-right:0;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 200%;
+}
+
+footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    font-size: 75%;
+}
+
+img {
+    margin: 0 auto;
+}
+
+table {
+    padding: 5px;
+    vertical-align: top;
+    text-align: left;
+}
+
+th {
+    padding: 5px;
+    vertical-align: top;
+    text-align: left;   
+}
+
+td {
+    padding: 5px;
+    vertical-align: top;
+    text-align: left;   
+}
+
+.arial_20   {font-family:arial;font-size:20pt;}
+.arial_16   {font-family:arial;font-size:16pt;}
+.arial_12   {font-family:arial;font-size:12pt;}
+.arial_10   {font-family:arial;font-size:10pt;}
+.arial_8    {font-family:arial;font-size:8pt;}

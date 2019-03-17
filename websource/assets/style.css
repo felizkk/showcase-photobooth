@@ -1,0 +1,83 @@
+body {
+	width:100%;
+    text-align:center;
+    margin-top:0;
+    margin-left:0;
+    margin-right:0;
+}
+
+.arial_24   {font-family:arial;font-size:24pt;}
+.arial_16   {font-family:arial;font-size:16pt;}
+.arial_12   {font-family:arial;font-size:12pt;}
+.arial_10   {font-family:arial;font-size:10pt;}
+.arial_8    {font-family:arial;font-size:8pt;}
+
+table.header {
+    width:100%;
+    border-collapse:collapse;
+    border:1px solid #000;
+    height: 46px; 
+    padding:5px;
+}
+
+td.header {
+    width:100px;
+    text-align:center;
+}
+
+a.link:link { color:blue;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+a.link:visited { color:blue;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+a.link:hover { color:red;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+
+a.header:link { color:#ffffff;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+a.header:visited { color:#ffffff;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+a.header:hover { color:#ffffff;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt; }
+
+.textbox {padding:2px;border:1px solid black;background-color:khaki;font-family:arial;font-size:10pt;}
+.button {padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;border:1px solid black;background-color:brown;color:white;font-weight:bold;text-decoration:none;font-family:arial;font-size:10pt;}
+.select {padding:2px;border:1px solid black;background-color:khaki;font-family:arial;font-size:10pt;}
+
+th.list {font-family:arial;font-size:10pt;font-weight:bold;
+		text-align:left;
+		background-color:khaki;
+		padding:5px;
+		vertical-align:top;
+}
+
+tr.list {
+	border:1px grey;
+	border-top-style:solid;
+	border-bottom-style:solid;
+}
+
+td.list {
+	text-align:left;
+	padding:5px;
+	font-family:arial;
+	font-size:10pt;
+}
+
+tr.list_over {
+	text-align:left;
+	border:1px grey;
+	border-top-style:solid;
+	border-bottom-style:solid;
+	background-color: lightgrey;
+	cursor: pointer;
+}
+
+td.list_over {
+	text-align:left;
+	padding:5px;
+	font-family:arial;
+	font-size:10pt;
+	background-color: lightgrey;
+	cursor: pointer;
+}
+
+#header1 { height: 46px; background: #CFD6EB url(_images/bg1.png) }
+#header1 .logo { height: 43px; width: 242px; background: url(_images/logo.png) no-repeat; float: left; }
+
+#navigation { display: block;  border-bottom: 0px solid #CFD6EB; padding-top: 10px; padding-bottom: 5px; padding-left: 5px; }
+#navigation a { /*color: #006699; text-decoration: none; padding: 5px 8px; font-size: 1em;*/ }
+#navigation a:hover { /*color: #FF6600;*/ }

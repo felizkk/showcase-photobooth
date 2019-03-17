@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ansible: Automation for Everyone</title>
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+
+<table style="width:100%;">
+<tr>
+    <td style="width:40%;">
+        <table>
+        <tr><td style="text-align:center;">
+            <div>
+                <img src="ansible-tower-small.png"/>
+                </br></br>
+            </div>
+        </td></tr>
+        <tr><td>
+            <div class="arial_16" style="font-style:bold;color:brown;text-align:center;">
+                Ansible is the easiest Automation you can use today</br>for your entire IT Infrastructure
+                </br></br>
+            </div>
+        </td></tr>
+        <tr><td>
+                <table>
+                    <tr>
+                        <td style="width:120px;"><b>EASY</b></td>
+                        <td>Ansible uses human language, not programming scripts.</br>
+                        It is very quick to learn and knowledge sharing becomes very easy</br></br></td>
+                    </tr>
+                    <tr>
+                        <td style="width:120px;"><b>POWERFUL</b></td>
+                        <td>Ansible is shipped with thousands of modules which integrate to countless vendors out there</br></br></td>
+                    </tr>
+                    <tr>
+                        <td style="width:120px;"><b>AGENTLESS</b></td>
+                        <td>You do not need to install any software or agents on the remote machines</br></br></td>
+                    </tr>                                        
+                </table>
+        </td></tr>        
+        </table>
+    </td>
+    <td style="width:60%;">
+        </br></br>
+
+        <?php
+            $db_host    = "dbserver1";
+            $db_user    = "ansible";
+            $db_pass    = "redhat";
+            $db_name    = "showcase";        
+            
+            $db_conn    = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+            if (mysqli_connect_errno($db_conn)){
+                echo "<p>Database is not found. Please deploy DBServer</p>";
+            }
+            else {
+                echo "<table style='border:1pt solid black;padding: 0px;'>";
+                echo "<tr style='background-color:lightgray;'>";
+                echo "<th style='width:150px;border:1pt solid black;'>Full Name</th>";
+                echo "<th style='width:150px;border:1pt solid black;'>Email</th>";
+                echo "<th style='width:300px;border:1pt solid black;'>Company</th>";
+                echo "</tr>";
+
+                $visitor = mysqli_query($db_conn, "SELECT fullname, email, company FROM visitor;");
+                while ($visitor_row = mysqli_fetch_assoc($visitor)){
+                    echo "<tr>";
+                    echo "<td style='border:1pt solid black;'>" . $visitor_row["fullname"] . "</td>";
+                    echo "<td style='border:1pt solid black;'>" . $visitor_row["email"] . "</td>";
+                    echo "<td style='border:1pt solid black;'>" . $visitor_row["company"] . "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            }
+            mysqli_close($db_conn);
+        ?>
+    </td>
+</tr>
+</table>
+
+<footer>{{ inventory_hostname }}<br />Ansible by Red Hat</footer>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+LOCK TABLES `visitor` WRITE;
+INSERT INTO `visitor` (`location`,`external_id`, `fullname`, `company`, `email`) VALUES ('{{ location }}', '{{ uniqueid.stdout_lines[0] }}','{{ randomname.stdout_lines[0] }}','{{ randomcompany.stdout_lines[0] }}', '{{ randomemail.stdout_lines[0] }}');
+UNLOCK TABLES;
+

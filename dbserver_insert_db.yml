@@ -1,0 +1,31 @@
+---
+- name: MySQL Insert Table
+  hosts: "{{ target_host_name }}*" 
+  gather_facts: no
+  become: yes
+  become_method: sudo  
+
+  tasks:
+  - name: create an sql file from template
+    template:
+      src: templates/insert_table.sql.j2
+      dest: /tmp/insert_table.sql
+
+  - name: insert database entries
+    mysql_db:
+      name: theredteam
+      login_user: ansible
+      login_password: redhat
+      login_unix_socket: "/var/lib/mysql/mysql.sock"
+      config_file: "/etc/my.cnf"      
+      state: import
+      target: /tmp/insert_table.sql
+
+  - name: test table output
+    command: 'mysql -uansible -predhat theredteam -e "select * from member;"'
+    register: tableoutput
+
+  - name: display table output
+    debug:
+      var: tableoutput.stdout_lines
+...

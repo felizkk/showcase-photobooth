@@ -1,0 +1,90 @@
+---
+- name: Photobooth Playbook
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    # sc-akl / sc-wtn / sc-chch / golfday
+    - location: "sc-akl"
+    - mpjeg_url: "http://192.168.1.245:8008"
+    - photowebpath: "/var/www/html/photo/{{ location }}"
+
+  tasks:
+  #- name: playback countdown
+  #  shell: "vlc countdown.mp4"
+
+  #- name: wait for countdown
+  #  wait_for: timeout=7
+
+  # Using sound clip from sox app (play) 
+
+  #- name: play shutter sound
+  #  shell: play shutter.aiff
+
+  #- name: capture jpeg
+  #  shell: ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 output.jpg -y
+
+  # Random Generator Scripts for Testing
+  - name: create random name generator
+    shell: script/randomname.sh
+    register: randomname
+  - name: create random email generator
+    shell: script/randomemail.sh
+    register: randomemail
+  - name: create random company generator
+    shell: script/randomcompany.sh
+    register: randomcompany
+  - name: generate unique id
+    shell: script/unique_id.sh {{ randomname.stdout_lines[0] }}
+    register: uniqueid
+
+  #- name: generate unique id
+  #  shell: /home/feliz/ansible/showcase-photobooth/unique_id.sh {{ fullname }}
+  #  register: uniqueid
+
+  - name: upload photo to webserver
+    copy:
+      src: output.jpg
+      dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
+      mode: u=rw,g=r,o=r
+    delegate_to: showcase.fedorahost
+
+  - name: create an sql file from template
+    template:
+      src: templates/insert_table.sql.j2
+      dest: /tmp/insert_table.sql
+    delegate_to: showcase.fedorahost  
+
+  - name: insert database entries
+    mysql_db:
+      name: showcase
+      login_user: ansible
+      login_password: redhat
+      login_unix_socket: "/var/lib/mysql/mysql.sock"
+      config_file: "/etc/my.cnf"      
+      state: import
+      target: /tmp/insert_table.sql
+    delegate_to: showcase.fedorahost  
+
+  #- name: test table output
+  #  command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
+  #  register: tableoutput
+  #  delegate_to: showcase.fedorahost
+
+  #- name: display table output
+  #  debug:
+  #    var: tableoutput.stdout_lines
+  #  delegate_to: showcase.fedorahost  
+
+  # html2ps http://website/something.php | lpr
+  # html2ps http://website/something.php | ps2pdf - something.pdf
+  # html2ps available at Fedora, ps2pdf available with ghostscript
+  # firefox --headless --screenshot /home/feliz/Work/golfday.png http://showcase/assets/golfday.php
+
+  - name: printing flyer
+    ping:
+
+  - name: display photobooth unique id
+    debug:
+      msg: new unique id is {{ uniqueid.stdout_lines[0] }}
+...
