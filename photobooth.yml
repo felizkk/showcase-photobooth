@@ -19,6 +19,7 @@
   # Playback counting down video
   - name: playback countdown
     become: yes
+    become_method: su
     become_user: feliz
     shell: "vlc {{ showcase_home }}/countdown.mp4"
   - name: wait for countdown
