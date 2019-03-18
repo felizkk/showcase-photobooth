@@ -46,7 +46,6 @@
 
   vars:
     - photowebpath: "/var/www/html/photo/{{ location }}"
-    - showcase_home: "/home/feliz/showcase"
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
@@ -74,7 +73,7 @@
   become_method: sudo
 
   vars:
-    - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
+    - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
   #- name: get unique id for dbserver
@@ -110,7 +109,7 @@
   gather_facts: no
 
   vars:
-    - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
+    - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
   #- name: get unique id for flyer
