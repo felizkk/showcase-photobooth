@@ -13,6 +13,11 @@
     - showcase_home: "/home/feliz/showcase"
 
   tasks:
+  # Generate unique id for visitor entry
+  - name: generate unique id
+    shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
+    register: uniqueid
+
   # Playback counting down video
   - name: playback countdown
     become: yes
@@ -30,11 +35,6 @@
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
     shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 {{ showcase_home }}/output.jpg -y"
-
-  # Generate unique id for visitor entry
-  - name: generate unique id
-    shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
-    register: uniqueid
 
 
 # Upload photo to the cloud webserver
@@ -54,7 +54,9 @@
   #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
   #  register: uniqueid
   #  delegate_to: localhost
-
+  - debug:
+      msg: "new unique id is {{ unique_id }}"
+    
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
