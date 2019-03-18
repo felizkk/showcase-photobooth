@@ -34,7 +34,7 @@
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
-    shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 {{ showcase_home }}/output.jpg -y"
+    shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 tmp/output.jpg -y"
 
 
 # Upload photo to the cloud webserver
@@ -62,7 +62,7 @@
   
   - name: upload photo to webserver
     copy:
-      src: "{{ showcase_home }}/output.jpg"
+      src: "tmp/output.jpg"
       dest: "{{ photowebpath }}/{{ unique_id }}.jpg"
       mode: u=rw,g=r,o=r
 
