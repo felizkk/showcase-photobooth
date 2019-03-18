@@ -94,12 +94,14 @@
   gather_facts: no
 
   vars:
-    - webserver_public_ip: "{{ hostvars['showcase-webserver-01']['public_ip'] }}"
+    #- webserver_public_ip: "{{ hostvars['showcase-webserver-01']['public_ip'] }}"
+    - webserver_public_ip: "www.redhatnz.com"
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
+    - printoutpath: "/home/feliz/showcase/printout.png"
 
   tasks:
   - name: printing flyer
-    shell: "firefox --headless --new-instance --screenshot /tmp/printout.png http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
+    shell: "firefox --headless --new-instance --screenshot {{ printoutpath }} http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
 
   # Shows Unique ID
   - name: display photobooth unique id
