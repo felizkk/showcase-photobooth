@@ -25,7 +25,7 @@
     become: yes
     become_method: su
     become_user: feliz  
-    shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"'    
+    shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"    
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
