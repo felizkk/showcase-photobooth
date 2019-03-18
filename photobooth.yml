@@ -50,17 +50,15 @@
     - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
 
   tasks:
-  #- name: get unique id for webserver
-  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
-  #  register: uniqueid
-  #  delegate_to: localhost
-  - debug:
-      msg: "new unique id is {{ unique_id }}"
+  - name: get unique id for webserver
+    shell: "cat {{ showcase_home }}/new_unique_id.txt"
+    register: uniqueid
+    delegate_to: localhost
     
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
-      dest: "{{ photowebpath }}/{{ unique_id }}.jpg"
+      dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
       mode: u=rw,g=r,o=r
 
 # Create database entry for visitor
