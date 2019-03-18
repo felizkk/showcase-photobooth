@@ -49,16 +49,6 @@
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
-  #- name: get unique id for webserver
-  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
-  #  register: uniqueid
-  #  delegate_to: localhost
-
-  #- name: copy unique id to cloud webserver
-  #  copy:
-  #    src: "/tmp/new_unique_id.txt"
-  #    dest: "/tmp/new_unique_id.txt"
-  
   - name: upload photo to webserver
     copy:
       src: "/tmp/output.jpg"
@@ -76,11 +66,6 @@
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
-  #- name: get unique id for dbserver
-  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
-  #  register: uniqueid
-  #  delegate_to: localhost
-    
   - name: create an sql file from template
     template:
       src: templates/insert_table.sql.j2
@@ -105,21 +90,16 @@
 
 # Printing Flyer
 - name: Photobooth - Printing Flyer
-  hosts: showcase-webserver-01
+  hosts: localhost
   gather_facts: no
 
   vars:
+    - webserver_public_ip: "{{ hostvars['showcase-webserver-01']['public_ip'] }}"
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
-  #- name: get unique id for flyer
-  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
-  #  register: uniqueid
-  #  delegate_to: localhost
-
   - name: printing flyer
-    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ public_ip }}/flyer/{{ unique_id }}"
-    delegate_to: localhost
+    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
 
   # Shows Unique ID
   - name: display photobooth unique id
