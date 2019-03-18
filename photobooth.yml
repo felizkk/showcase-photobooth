@@ -99,7 +99,7 @@
 
   tasks:
   - name: printing flyer
-    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
+    shell: "firefox --headless --new-instance --screenshot /tmp/printout.png http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
 
   # Shows Unique ID
   - name: display photobooth unique id
