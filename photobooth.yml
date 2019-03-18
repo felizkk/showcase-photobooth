@@ -21,10 +21,12 @@
     shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"'
   - name: wait for countdown
     wait_for: timeout=7
+  - name: play shutter sound
+    shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"'    
 
   # Using sound clip from sox app (play) 
-  - name: play shutter sound
-    shell: "play {{ showcase_home }}/shutter.aiff"
+  #- name: play shutter sound
+  #  shell: "play {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
@@ -70,7 +72,7 @@
 
   # Printing Flyer
   - name: printing flyer
-    shell: "firefox --headless --screenshot printout.png http://{{ webserver_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
+    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ webserver_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
 
   # Shows Unique ID
   - name: display photobooth unique id
