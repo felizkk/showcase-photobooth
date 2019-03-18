@@ -5,7 +5,7 @@
 <link href="/assets/style.css" rel="stylesheet" type="text/css"/>
 <script>
     window.onload = function() {
-        setTimeout(function(){document.location='http://showcase/slideshow/<?php echo $next_index; ?>';}, 10000);
+        setTimeout(function(){document.location='http://www.redhatnz.com/slideshow/<?php echo $next_index; ?>';}, 10000);
     }
 </script>
 </head>
@@ -19,7 +19,7 @@
 </tr>
 <tr>
     <td style="text-align:center;padding:2px;">
-        <img style="width:1200px;" src="http://showcase/photo/<?php echo $visitor_array[$target_index]['location'] . '/' . $visitor_array[$target_index]['external_id']?>.jpg" />
+        <img style="width:1200px;" src="http://www.redhatnz.com/photo/<?php echo $visitor_array[$target_index]['location'] . '/' . $visitor_array[$target_index]['external_id']?>.jpg" />
     </td>
 </tr>
 <tr>

@@ -24,7 +24,7 @@
         <?php echo $visitor['id']; ?>
     </td>
     <td class="list">
-        <a class="link" href="http://showcase/leads/<?php echo $visitor['location']; ?>"><?php echo $visitor['location']; ?></a>
+        <a class="link" href="http://www.redhatnz.com/leads/<?php echo $visitor['location']; ?>"><?php echo $visitor['location']; ?></a>
     </td>
     <td class="list">
         <?php echo $visitor['external_id']; ?>
@@ -39,10 +39,10 @@
         <?php echo $visitor['email']; ?>
     </td>
     <td class="list">
-        <a class="link" href="http://showcase/flyer/<?php echo $visitor['external_id']; ?>">Flyer</a>
+        <a class="link" href="http://www.redhatnz.com/flyer/<?php echo $visitor['external_id']; ?>">Flyer</a>
     </td>
     <td class="list">
-        <a class="link" href="http://showcase/download/<?php echo $visitor['external_id']; ?>">Download</a>
+        <a class="link" href="http://www.redhatnz.com/download/<?php echo $visitor['external_id']; ?>">Download</a>
     </td>                    
 </tr>
 

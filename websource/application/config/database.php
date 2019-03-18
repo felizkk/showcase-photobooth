@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => 'dbserver1',
 	'username' => 'ansible',
 	'password' => 'redhat',
 	'database' => 'showcase',
