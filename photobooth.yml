@@ -50,6 +50,7 @@
   - name: get unique id for webserver
     shell: "cat {{ showcase_home }}/new_unique_id.txt"
     register: uniqueid
+    delegate_to: localhost
 
   - name: upload photo to webserver
     copy:
@@ -66,6 +67,7 @@
   - name: get unique id for dbserver
     shell: "cat {{ showcase_home }}/new_unique_id.txt"
     register: uniqueid
+    delegate_to: localhost
     
   - name: create an sql file from template
     template:
