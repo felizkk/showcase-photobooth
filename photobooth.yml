@@ -41,6 +41,8 @@
 - name: Photobooth - Upload Photo to Cloud WebServer
   hosts: showcase-webserver-01
   gather_facts: no
+  become: yes
+  become_method: sudo
 
   vars:
     - photowebpath: "/var/www/html/photo/{{ location }}"
@@ -62,7 +64,9 @@
 - name: Photobooth - Create Database Entry on DBServer
   hosts: showcase-dbserver
   gather_facts: no
-
+  become: yes
+  become_method: sudo
+  
   tasks:
   - name: get unique id for dbserver
     shell: "cat {{ showcase_home }}/new_unique_id.txt"
