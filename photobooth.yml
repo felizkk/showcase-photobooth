@@ -18,9 +18,7 @@
   tasks:
   # Playback counting down video
   - name: playback countdown
-    become: yes
-    become_user: feliz
-    shell: "vlc {{ showcase_home }}/countdown.mp4"
+    shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"'
   - name: wait for countdown
     wait_for: timeout=7
 
