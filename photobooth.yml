@@ -58,7 +58,7 @@
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
-      dest: "{{ photowebpath }}/{{ uniqueid }}.jpg"
+      dest: "{{ photowebpath }}/{{ unique_id }}.jpg"
       mode: u=rw,g=r,o=r
 
 # Create database entry for visitor
@@ -68,11 +68,14 @@
   become: yes
   become_method: sudo
 
+  vars:
+    - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
+
   tasks:
-  - name: get unique id for dbserver
-    shell: "cat {{ showcase_home }}/new_unique_id.txt"
-    register: uniqueid
-    delegate_to: localhost
+  #- name: get unique id for dbserver
+  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
+  #  register: uniqueid
+  #  delegate_to: localhost
     
   - name: create an sql file from template
     template:
@@ -101,18 +104,21 @@
   hosts: showcase-webserver-01
   gather_facts: no
 
+  vars:
+    - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
+
   tasks:
-  - name: get unique id for flyer
-    shell: "cat {{ showcase_home }}/new_unique_id.txt"
-    register: uniqueid
-    delegate_to: localhost
+  #- name: get unique id for flyer
+  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
+  #  register: uniqueid
+  #  delegate_to: localhost
 
   - name: printing flyer
-    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ public_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
+    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ public_ip }}/flyer/{{ unique_id }}"
     delegate_to: localhost
 
   # Shows Unique ID
   - name: display photobooth unique id
     debug:
-      msg: new unique id is {{ uniqueid.stdout_lines[0] }}
+      msg: new unique id is {{ unique_id }}
 ...
