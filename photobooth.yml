@@ -57,8 +57,8 @@
 
   - name: copy unique id to cloud webserver
     copy:
-      src: "/home/feliz/showcase/new_unique_id.txt"
-      dest: /tmp/new_unique_id.txt
+      src: "/tmp/new_unique_id.txt"
+      dest: "/tmp/new_unique_id.txt"
   
   - name: upload photo to webserver
     copy:
