@@ -18,7 +18,10 @@
   tasks:
   # Playback counting down video
   - name: playback countdown
-    shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"'
+    become: yes
+    become_method: su
+    become_user: feliz
+    shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"
   - name: wait for countdown
     wait_for: timeout=7
   - name: play shutter sound
@@ -34,7 +37,7 @@
 
   # Generate unique id for visitor entry
   - name: generate unique id
-    shell: script/unique_id.sh {{ visitor_fullname }}
+    shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
     register: uniqueid
 
   # Upload photo to the cloud webserver
