@@ -1,18 +1,15 @@
 ---
-- name: Photobooth Playbook
-  hosts: showcase-group
+# Variables from Tower Survey:
+# visitor_fullname
+# visitor_company
+# visitor_email
+# Location options: sc-akl / sc-wtn / sc-chch / golfday
+- name: Photobooth - Capture Photo
+  hosts: localhost
   gather_facts: no
 
   vars:
-    # Variables from Tower Survey:
-    # visitor_fullname
-    # visitor_company
-    # visitor_email
-    # Location options: sc-akl / sc-wtn / sc-chch / golfday
-    - location: "sc-akl"
     - mpjeg_url: "http://192.168.1.245:8008"
-    - photowebpath: "/var/www/html/photo/{{ location }}"
-    - webserver_ip: "40.126.236.101"
     - showcase_home: "/home/feliz/showcase"
 
   tasks:
@@ -22,7 +19,6 @@
     become_method: su
     become_user: feliz
     shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"
-    delegate_to: localhost
   - name: wait for countdown
     wait_for: timeout=6
   - name: play shutter sound
@@ -30,11 +26,6 @@
     become_method: su
     become_user: feliz  
     shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"'    
-    delegate_to: localhost
-
-  # Using sound clip from sox app (play) 
-  #- name: play shutter sound
-  #  shell: "play {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
@@ -47,20 +38,34 @@
     register: uniqueid
     delegate_to: localhost
 
+
+- name: Photobooth - Upload Photo to Cloud WebServer
+  hosts: showcase-webserver-01
+  gather_facts: no
+
+  vars:
+    - photowebpath: "/var/www/html/photo/{{ location }}"
+    - showcase_home: "/home/feliz/showcase"
+
+  tasks:
   # Upload photo to the cloud webserver
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
       dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
       mode: u=rw,g=r,o=r
-    when: ansible_host == showcase-webserver
 
+
+- name: Photobooth - Create Database Entry on DBServer
+  hosts: showcase-dbserver
+  gather_facts: no
+
+  tasks:
   # Create database entry for visitor
   - name: create an sql file from template
     template:
       src: templates/insert_table.sql.j2
       dest: /tmp/insert_table.sql
-    when: ansible_host == showcase-dbserver
 
   - name: insert database entries
     mysql_db:
@@ -71,19 +76,23 @@
       config_file: "/etc/my.cnf"      
       state: import
       target: /tmp/insert_table.sql
-    when: ansible_host == showcase-dbserver
 
-  #- name: test table output
-  #  command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
-  #  register: tableoutput
-  #  delegate_to: showcase-dbserver
-  #- name: display table output
-  #  debug:
-  #    var: tableoutput.stdout_lines
+  - name: test table output
+    command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
+    register: tableoutput
+  - name: display table output
+    debug:
+      var: tableoutput.stdout_lines
 
+
+- name: Photobooth - Printing Flyer
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
   # Printing Flyer
   - name: printing flyer
-    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ webserver_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
+    shell: "firefox --headless --new-instance --screenshot printout.png http://{{ public_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
     delegate_to: localhost
 
   # Shows Unique ID
