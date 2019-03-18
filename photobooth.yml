@@ -1,6 +1,6 @@
 ---
 - name: Photobooth Playbook
-  hosts: localhost
+  hosts: showcase-group
   gather_facts: no
 
   vars:
@@ -22,10 +22,15 @@
     become_method: su
     become_user: feliz
     shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"
+    delegate_to: localhost
   - name: wait for countdown
-    wait_for: timeout=7
+    wait_for: timeout=6
   - name: play shutter sound
+    become: yes
+    become_method: su
+    become_user: feliz  
     shell: 'su - feliz -c "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"'    
+    delegate_to: localhost
 
   # Using sound clip from sox app (play) 
   #- name: play shutter sound
@@ -34,11 +39,13 @@
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
     shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 {{ showcase_home }}/output.jpg -y"
+    delegate_to: localhost
 
   # Generate unique id for visitor entry
   - name: generate unique id
     shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
     register: uniqueid
+    delegate_to: localhost
 
   # Upload photo to the cloud webserver
   - name: upload photo to webserver
@@ -46,14 +53,15 @@
       src: "{{ showcase_home }}/output.jpg"
       dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
       mode: u=rw,g=r,o=r
-    delegate_to: showcase-webserver-01
+    when: ansible_host == showcase-webserver
 
   # Create database entry for visitor
   - name: create an sql file from template
     template:
       src: templates/insert_table.sql.j2
       dest: /tmp/insert_table.sql
-    delegate_to: showcase-dbserver 
+    when: ansible_host == showcase-dbserver
+
   - name: insert database entries
     mysql_db:
       name: showcase
@@ -63,22 +71,24 @@
       config_file: "/etc/my.cnf"      
       state: import
       target: /tmp/insert_table.sql
-    delegate_to: showcase-dbserver  
+    when: ansible_host == showcase-dbserver
 
-  - name: test table output
-    command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
-    register: tableoutput
-    delegate_to: showcase-dbserver
-  - name: display table output
-    debug:
-      var: tableoutput.stdout_lines
+  #- name: test table output
+  #  command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
+  #  register: tableoutput
+  #  delegate_to: showcase-dbserver
+  #- name: display table output
+  #  debug:
+  #    var: tableoutput.stdout_lines
 
   # Printing Flyer
   - name: printing flyer
     shell: "firefox --headless --new-instance --screenshot printout.png http://{{ webserver_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
+    delegate_to: localhost
 
   # Shows Unique ID
   - name: display photobooth unique id
     debug:
       msg: new unique id is {{ uniqueid.stdout_lines[0] }}
+    delegate_to: localhost
 ...
