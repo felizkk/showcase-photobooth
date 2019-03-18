@@ -34,7 +34,7 @@
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
-    shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 tmp/output.jpg -y"
+    shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 /tmp/output.jpg -y"
 
 
 # Upload photo to the cloud webserver
@@ -55,14 +55,14 @@
   #  register: uniqueid
   #  delegate_to: localhost
 
-  - name: copy unique id to cloud webserver
-    copy:
-      src: "/tmp/new_unique_id.txt"
-      dest: "/tmp/new_unique_id.txt"
+  #- name: copy unique id to cloud webserver
+  #  copy:
+  #    src: "/tmp/new_unique_id.txt"
+  #    dest: "/tmp/new_unique_id.txt"
   
   - name: upload photo to webserver
     copy:
-      src: "tmp/output.jpg"
+      src: "/tmp/output.jpg"
       dest: "{{ photowebpath }}/{{ unique_id }}.jpg"
       mode: u=rw,g=r,o=r
 
