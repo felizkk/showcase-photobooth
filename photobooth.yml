@@ -30,13 +30,11 @@
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
     shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 {{ showcase_home }}/output.jpg -y"
-    delegate_to: localhost
 
   # Generate unique id for visitor entry
   - name: generate unique id
     shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
     register: uniqueid
-    delegate_to: localhost
 
 
 - name: Photobooth - Upload Photo to Cloud WebServer
