@@ -20,7 +20,7 @@
     become_user: feliz
     shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/countdown.mp4"
   - name: wait for countdown
-    wait_for: timeout=6
+    wait_for: timeout=7
   - name: play shutter sound
     become: yes
     become_method: su
@@ -47,17 +47,18 @@
   vars:
     - photowebpath: "/var/www/html/photo/{{ location }}"
     - showcase_home: "/home/feliz/showcase"
+    - unique_id: "{{ lookup('file', '/home/feliz/showcase/new_unique_id.txt') }}"
 
   tasks:
-  - name: get unique id for webserver
-    shell: "cat {{ showcase_home }}/new_unique_id.txt"
-    register: uniqueid
-    delegate_to: localhost
+  #- name: get unique id for webserver
+  #  shell: "cat {{ showcase_home }}/new_unique_id.txt"
+  #  register: uniqueid
+  #  delegate_to: localhost
 
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
-      dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
+      dest: "{{ photowebpath }}/{{ uniqueid }}.jpg"
       mode: u=rw,g=r,o=r
 
 # Create database entry for visitor
@@ -66,7 +67,7 @@
   gather_facts: no
   become: yes
   become_method: sudo
-  
+
   tasks:
   - name: get unique id for dbserver
     shell: "cat {{ showcase_home }}/new_unique_id.txt"
