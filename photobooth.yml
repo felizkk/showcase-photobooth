@@ -13,23 +13,24 @@
     - mpjeg_url: "http://192.168.1.245:8008"
     - photowebpath: "/var/www/html/photo/{{ location }}"
     - webserver_ip: "40.126.236.101"
+    - showcase_home: "/home/feliz/showcase"
 
   tasks:
   # Playback counting down video
   - name: playback countdown
     become: yes
     become_user: feliz
-    shell: "vlc countdown.mp4"
+    shell: "vlc {{ showcase_home }}/countdown.mp4"
   - name: wait for countdown
     wait_for: timeout=7
 
   # Using sound clip from sox app (play) 
   - name: play shutter sound
-    shell: play shutter.aiff
+    shell: "play {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
-    shell: ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 output.jpg -y
+    shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 {{ showcase_home }}/output.jpg -y"
 
   # Generate unique id for visitor entry
   - name: generate unique id
@@ -39,7 +40,7 @@
   # Upload photo to the cloud webserver
   - name: upload photo to webserver
     copy:
-      src: output.jpg
+      src: "{{ showcase_home }}/output.jpg"
       dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
       mode: u=rw,g=r,o=r
     delegate_to: showcase-webserver-01
