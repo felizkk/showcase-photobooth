@@ -37,6 +37,7 @@
     register: uniqueid
 
 
+# Upload photo to the cloud webserver
 - name: Photobooth - Upload Photo to Cloud WebServer
   hosts: showcase-webserver-01
   gather_facts: no
@@ -46,20 +47,26 @@
     - showcase_home: "/home/feliz/showcase"
 
   tasks:
-  # Upload photo to the cloud webserver
+  - name: get unique id for webserver
+    shell: "cat {{ showcase_home }}/new_unique_id.txt"
+    register: uniqueid
+
   - name: upload photo to webserver
     copy:
       src: "{{ showcase_home }}/output.jpg"
       dest: "{{ photowebpath }}/{{ uniqueid.stdout_lines[0] }}.jpg"
       mode: u=rw,g=r,o=r
 
-
+# Create database entry for visitor
 - name: Photobooth - Create Database Entry on DBServer
   hosts: showcase-dbserver
   gather_facts: no
 
   tasks:
-  # Create database entry for visitor
+  - name: get unique id for dbserver
+    shell: "cat {{ showcase_home }}/new_unique_id.txt"
+    register: uniqueid
+    
   - name: create an sql file from template
     template:
       src: templates/insert_table.sql.j2
@@ -82,13 +89,17 @@
     debug:
       var: tableoutput.stdout_lines
 
-
+# Printing Flyer
 - name: Photobooth - Printing Flyer
-  hosts: localhost
+  hosts: showcase-webserver-01
   gather_facts: no
 
   tasks:
-  # Printing Flyer
+  - name: get unique id for flyer
+    shell: "cat {{ showcase_home }}/new_unique_id.txt"
+    register: uniqueid
+    delegate_to: localhost
+
   - name: printing flyer
     shell: "firefox --headless --new-instance --screenshot printout.png http://{{ public_ip }}/flyer/{{ uniqueid.stdout_lines[0] }}"
     delegate_to: localhost
@@ -97,5 +108,4 @@
   - name: display photobooth unique id
     debug:
       msg: new unique id is {{ uniqueid.stdout_lines[0] }}
-    delegate_to: localhost
 ...
