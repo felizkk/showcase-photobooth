@@ -28,10 +28,11 @@
   - name: wait for countdown
     wait_for: timeout=7
   - name: play shutter sound
-    become: yes
-    become_method: su
-    become_user: feliz
-    shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"
+    shell: "/bin/play {{ showcase_home }}/shutter.aiff"
+  #  become: yes
+  #  become_method: su
+  #  become_user: feliz
+  #  shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
@@ -94,12 +95,12 @@
       state: import
       target: /tmp/insert_table.sql
 
-  - name: test table output
-    command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
-    register: tableoutput
-  - name: display table output
-    debug:
-      var: tableoutput.stdout_lines
+  #- name: test table output
+  #  command: 'mysql -uansible -predhat showcase -e "select * from visitor;"'
+  #  register: tableoutput
+  #- name: display table output
+  #  debug:
+  #    var: tableoutput.stdout_lines
 
 # Printing Flyer
 - name: Photobooth - Printing Flyer
