@@ -1,4 +1,5 @@
 ---
+# We are using Ansible Tower for the data entry
 # Variables from Tower Survey:
 # visitor_fullname
 # visitor_company
@@ -10,7 +11,7 @@
 
   vars:
     - mpjeg_url: "http://192.168.1.245:8008"
-    - showcase_home: "/home/feliz/showcase"
+    - showcase_home: "/usr/share/showcase"
 
   tasks:
   # Generate unique id for visitor entry
@@ -29,15 +30,20 @@
   - name: play shutter sound
     become: yes
     become_method: su
-    become_user: feliz  
-    shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"    
+    become_user: feliz
+    shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
     shell: "ffmpeg -i {{ mpjeg_url }} -frames 1 -q:v 1 /tmp/output.jpg -y"
 
+  # Append photo with banner at the bottom
+  - name: append banner to photo
+    shell: "convert -append /tmp/output.jpg {{ showcase_home }}/bottom_{{ location }}.png /tmp/output_append.jpg"
 
 # Upload photo to the cloud webserver
+# We will have 2 picture files, one for flyer unique_id_f.jpg, 
+# and appended photo with banner unique_id.jpg
 - name: Photobooth - Upload Photo to Cloud WebServer
   hosts: showcase-webserver-01
   gather_facts: no
@@ -49,11 +55,18 @@
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
 
   tasks:
-  - name: upload photo to webserver
+  - name: upload flyer photo to webserver
     copy:
       src: "/tmp/output.jpg"
+      dest: "{{ photowebpath }}/{{ unique_id }}_f.jpg"
+      mode: u=rw,g=r,o=r
+
+  - name: upload appended photo to webserver
+    copy:
+      src: "/tmp/output_append.jpg"
       dest: "{{ photowebpath }}/{{ unique_id }}.jpg"
       mode: u=rw,g=r,o=r
+
 
 # Create database entry for visitor
 - name: Photobooth - Create Database Entry on DBServer
