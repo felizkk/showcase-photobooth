@@ -19,7 +19,7 @@
 </tr>
 <tr>
     <td style="text-align:center;padding:2px;">
-        <img style="width:100%;" src="http://www.redhatnz.com/photo/<?php echo $visitor_row['location'] . '/' . $visitor_row['external_id']?>.jpg" />
+        <img style="width:100%;" src="http://www.redhatnz.com/photo/<?php echo $visitor_row['location'] . '/' . $visitor_row['external_id']?>_f.jpg" />
     </td>
 </tr>
 <tr>
