@@ -28,7 +28,7 @@
   - name: wait for countdown
     wait_for: timeout=7
   - name: play shutter sound
-    shell: "/bin/play {{ showcase_home }}/shutter.aiff"
+    shell: "export DISPLAY=:0; /bin/play {{ showcase_home }}/shutter.aiff"
   #  become: yes
   #  become_method: su
   #  become_user: feliz
