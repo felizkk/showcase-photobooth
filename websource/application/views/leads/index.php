@@ -13,7 +13,6 @@
     <th class="list" style="width:200px;">External ID</th>
     <th class="list" style="width:200px;">Full Name</th>
     <th class="list" style="width:200px;">Company</th>
-    <th class="list" style="width:200px;">Email</th>
     <th class="list" style="width:100px;">Flyer</th>
     <th class="list" style="width:100px;">Download</th>
 </tr>
@@ -34,9 +33,6 @@
     </td>
     <td class="list">
         <?php echo $visitor['company']; ?>
-    </td> 
-    <td class="list">
-        <?php echo $visitor['email']; ?>
     </td>
     <td class="list">
         <a class="link" href="http://www.redhatnz.com/flyer/<?php echo $visitor['external_id']; ?>">Flyer</a>
