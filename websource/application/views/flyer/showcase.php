@@ -36,15 +36,18 @@
         <table>
             <tr>
                 <td style="width:40%;">
-                    <img style="width:100%;" src="/assets/scooter.jpg" />
+                    <img style="width:100%;" src="/assets/raspberrypi.jpg" />
                 </td>
                 <td style="width:60%;vertical-align:top;">
                     <div class="arial_24">
-                        <div style="color:blue;font-weight:bold;">Win a Scooter!</div>
+                        <div style="color:blue;font-weight:bold;">Win a Raspberry Pi Kit!</div>
                         </br>
-                        If you are a Red Hat New Zealand partner or customer, you are eligible to win an awesome electric scooter.</br>
+                        Start your Linux DIY Journey. Rapsberry Pi is a small, easy to use Linux machine. 
+                        You can use it for home projects, home automation, or even as a tiny media center for your TV.</br>
                         </br>
-                        We have one scooter for each showcase and we will announce the winner at the end of each show.</br>
+                        If you are a Red Hat New Zealand partner or customer, you are eligible to win one. 
+                        We have one awesome Raspberry Pi Kit for each showcase and we will announce the winner at the end of each show.</br>
+                        </br>
                     </div>
                 </td>
             </tr>
@@ -54,7 +57,8 @@
 <tr>
     <td style="text-align:left;padding:2px;">
         <div class="arial_24">
-            <div style="color:blue;font-weight:bold;">Second chance to win a scooter!</div>
+            <div style="color:blue;font-weight:bold;">Second chance to win a Raspberry Pi Kit!</div>
+            </br>
             <div class="arial_16">
                 Download your picture and post it in your Linked In. Show us how you think IT Automation can improve your work or life. 
                 Use <b>#AnsibleIMShowcase2019</b> so we can find it. The best entry will win.

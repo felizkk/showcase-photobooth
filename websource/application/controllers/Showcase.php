@@ -19,9 +19,10 @@ class Showcase extends CI_Controller {
 		$this->load->model('showcase_model');
 		$data['visitor_array'] = $this->showcase_model->get_recent_5();
 
-		if ($data['visitor_array'][0]['location'] == "sc-akl" ||
-			$data['visitor_array'][0]['location'] == "sc-wtn" ||
-			$data['visitor_array'][0]['location'] == "sc-chch")
+		if ($data['visitor_array'][0]['location'] == "sc-akl"  ||
+			$data['visitor_array'][0]['location'] == "sc-wtn"  ||
+			$data['visitor_array'][0]['location'] == "sc-chch" || 
+			$data['visitor_array'][0]['location'] == "sc-test" )
 		{
 			$this->load->view('slideshow/showcase', $data);
 		}
@@ -38,9 +39,10 @@ class Showcase extends CI_Controller {
 		$data['title'] = 'Flyer - ' . $external_id;
 		$data['visitor_row'] = $this->showcase_model->get_entry($external_id);
 
-		if ($data['visitor_row']['location'] == "sc-akl" ||
-			$data['visitor_row']['location'] == "sc-wtn" ||
-			$data['visitor_row']['location'] == "sc-chch")
+		if ($data['visitor_row']['location'] == "sc-akl"  ||
+			$data['visitor_row']['location'] == "sc-wtn"  ||
+			$data['visitor_row']['location'] == "sc-chch" ||
+			$data['visitor_row']['location'] == "sc-test" )
 		{
 			$this->load->view('flyer/showcase', $data);
 		}
