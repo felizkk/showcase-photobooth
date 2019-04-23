@@ -112,13 +112,20 @@
     - webserver_public_ip: "www.redhatnz.com"
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
     - printoutpath: "/home/feliz/showcase/printout.png"
-
+    - print_flyer: "No"
+    - printer_name: "L310"
+  
   tasks:
-  - name: printing flyer
+  - name: preparing flyer
     shell: "firefox --headless --new-instance --screenshot {{ printoutpath }} http://{{ webserver_public_ip }}/flyer/{{ unique_id }}"
+    when: print_flyer == "Yes"
+
+  - name: print flyer
+    shell: "lpr -P {{ printer_name }} {{ printoutpath }}"
+    when: print_flyer == "Yes"
 
   # Shows Unique ID
   - name: display photobooth unique id
     debug:
-      msg: new unique id is {{ unique_id }}
+      msg: new unique id is {{ unique_id }}  
 ...
