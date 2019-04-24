@@ -9,6 +9,7 @@
 <table style="width:100%;padding:5px;">
 <tr>
     <th class="list" style="width:80px;">ID</th>
+    <th class="list" style="width:100px;">Date</th>
     <th class="list" style="width:100px;">Location</th>
     <th class="list" style="width:200px;">External ID</th>
     <th class="list" style="width:200px;">Full Name</th>
@@ -21,6 +22,9 @@
 <tr class="list">
     <td class="list">
         <?php echo $visitor['id']; ?>
+    </td>
+    <td class="list">
+        <?php if ($visitor['timestamp'] != "") echo date('d-m-Y, H:i:s', $visitor['timestamp']); ?>
     </td>
     <td class="list">
         <a class="link" href="http://www.redhatnz.com/leads/<?php echo $visitor['location']; ?>"><?php echo $visitor['location']; ?></a>
