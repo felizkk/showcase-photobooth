@@ -7,7 +7,7 @@
 # Location options: sc-akl / sc-wtn / sc-chch / golfday
 - name: Photobooth - Capture Photo
   hosts: localhost
-  gather_facts: yes
+  gather_facts: no
 
   vars:
     - mpjeg_url: "http://192.168.4.245:8008"
@@ -72,7 +72,7 @@
 # Create database entry for visitor
 - name: Photobooth - Create Database Entry on DBServer
   hosts: showcase-dbserver
-  gather_facts: no
+  gather_facts: yes
   become: yes
   become_method: sudo
 
