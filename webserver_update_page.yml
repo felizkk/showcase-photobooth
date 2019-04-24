@@ -1,15 +1,15 @@
 ---
-- name: Download the latest copy of website source codes
-  hosts: localhost
-  connection: local
-  gather_facts: no
-
-  tasks:
-  - name: get the latest webpage source from git
-    git:
-      repo: "https://github.com/felizkk/showcase-photobooth.git"
-      dest: "/tmp/websource"
-
+#- name: Download the latest copy of website source codes
+#  hosts: localhost
+#  connection: local
+#  gather_facts: no
+#
+#  tasks:
+#  - name: get the latest webpage source from git
+#    git:
+#      repo: "https://github.com/felizkk/showcase-photobooth.git"
+#      dest: "/tmp/websource"
+#
 - name: Deploy New Website to Webservers
   hosts: showcase-webserver-01
   gather_facts: no
@@ -45,7 +45,7 @@
 
   - name: update website files - application parts
     copy:
-      src: "/tmp/websource/application/"
+      src: "websource/application/"
       dest: "/var/www/html/application/"
       mode: u=rw,g=r,o=r
 ...
