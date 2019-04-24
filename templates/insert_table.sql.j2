@@ -1,3 +1,3 @@
 LOCK TABLES `visitor` WRITE;
-INSERT INTO `visitor` (`location`,`external_id`, `fullname`, `company`, `email`, `timestamp`) VALUES ('{{ location }}', '{{ unique_id }}','{{ visitor_fullname }}','{{ visitor_company }}', '{{ visitor_email }}', '{{ ansible_date_time.epoch }}');
+INSERT INTO `visitor` (`location`,`external_id`, `fullname`, `company`, `role`, `phone`, `email`, `timestamp`) VALUES ('{{ location }}', '{{ unique_id }}','{{ visitor_fullname }}','{{ visitor_company }}','{{ visitor_role }}','{{ visitor_phone }}','{{ visitor_email }}','{{ ansible_date_time.epoch }}');
 UNLOCK TABLES;
