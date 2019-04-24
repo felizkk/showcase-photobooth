@@ -6,7 +6,7 @@ CREATE TABLE `visitor` (
   `fullname` varchar(100) NOT NULL,
   `company` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `timestamp` varchar(100),
+  `timestamp` INT,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11001 DEFAULT CHARSET=latin1;
 
