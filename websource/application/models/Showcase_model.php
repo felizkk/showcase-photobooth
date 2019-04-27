@@ -22,10 +22,11 @@ class Showcase_model extends CI_Model {
 
     public function get_report($location = NULL)
     {
-        if ($location != NULL){
-            $query = $this->db->get_where('visitor', array('location' => $location));
-        }
-        else $query = $this->db->get('visitor');
+        $sql = "SELECT id, location, external_id, fullname, company, role, phone, email, timestamp ";
+        $sql .= "FROM visitor ";
+        if ($location != NULL) $sql .= "WHERE location = '" . $location . "' ";
+        $sql .= "ORDER BY timestamp DESC";
+        $query = $this->db->query($sql);
         return $query->result_array();
     }
 }
