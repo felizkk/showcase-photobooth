@@ -33,19 +33,11 @@
       state: "{{ item }}"
     with_items:
       - absent
-      - directory
-
-  - name: create application directory
-    file: 
-      path: "/var/www/html/application"
-      state: "{{ item }}"
-    with_items:
-      - present
-      - directory      
+      - directory     
 
   - name: update website files - application parts
     copy:
-      src: "websource/application/"
-      dest: "/var/www/html/application/"
+      src: "websource/application"
+      dest: "/var/www/html/application"
       mode: u=rw,g=r,o=r
 ...
