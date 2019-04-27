@@ -38,6 +38,6 @@
   - name: update website files - application parts
     copy:
       src: "websource/application"
-      dest: "/var/www/html/application"
+      dest: "/var/www/html/"
       mode: u=rw,g=r,o=r
 ...
