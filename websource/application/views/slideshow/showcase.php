@@ -9,23 +9,22 @@
     }
 </script>
 </head>
-<body style="padding:3px;background-color:black;">
+<body style="padding:3px;background-color:#b30000;">
 
-<table style="width:100%;padding:5px;">
+<table style="padding:5px;">
 <tr>
-    <td style="text-align:center;padding:2px;">
-        <div class="arial_24" style="color:white;">A Cloud Photobooth Powered by Ansible and Azure</div>
+    <td style="width:300px;"></td>
+    <td style="width:1300px;text-align:center;padding:2px;">
+        <img style="width:100%;" src="/assets/powered_by_ansible.png" />
     </td>
+    <td style="width:250px;"></td>
 </tr>
 <tr>
-    <td style="text-align:center;padding:2px;">
-        <img style="width:1200px;" src="http://www.redhatnz.com/photo/<?php echo $visitor_array[$target_index]['location'] . '/' . $visitor_array[$target_index]['external_id']?>.jpg" />
+    <td style="width:300px;"></td>
+    <td style="width:1300px;text-align:center;padding:2px;">
+        <img style="width:100%;" src="http://www.redhatnz.com/photo/<?php echo $visitor_array[$target_index]['location'] . '/' . $visitor_array[$target_index]['external_id']?>_f.jpg" />
     </td>
-</tr>
-<tr>
-    <td style="text-align:center;padding:2px;">
-        <div class="arial_24" style="color:white;">Thank You <?php echo $visitor_array[$target_index]['fullname']; ?> for visiting our booth!</div>
-    </td>
+    <td style="width:250px;"></td>
 </tr>
 
 </table>
