@@ -1,0 +1,13 @@
+- name: Photobooth - Select Prize Winner
+  hosts: showcase-dbserver
+  gather_facts: no
+
+  tasks:
+  - name: select random winner
+    command: mysql -uansible -predhat showcase -e "select * from visitor where location = '{{ location }}' order by rand() limit 1;"
+    register: tableoutput
+
+  - name: display winner
+    debug:
+      var: tableoutput.stdout_lines
+...
