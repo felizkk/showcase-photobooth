@@ -1,0 +1,17 @@
+- name: Photobooth - Backup Database
+  hosts: showcase-dbserver
+  gather_facts: yes
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: backup database entries
+    mysql_db:
+      name: showcase
+      login_user: ansible
+      login_password: redhat
+      login_unix_socket: "/var/lib/mysql/mysql.sock"
+      config_file: "/etc/my.cnf"      
+      state: dump
+      target: "/home/feliz/db_backup/backup_{{ ansible_date_time.epoch }}.sql"
+...
