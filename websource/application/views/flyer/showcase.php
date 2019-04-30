@@ -70,7 +70,7 @@
 <tr>
     <td style="text-align:center;padding:2px;">
         <div class="arial_12">
-            Contest terms and conditions: http://www.redhatnz.com/showcasetnc.html
+            Contest terms and conditions: http://www.redhatnz.com/showcasetnc
         </div>
     </td>
 </tr>
