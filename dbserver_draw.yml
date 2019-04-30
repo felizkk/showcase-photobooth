@@ -4,7 +4,7 @@
 
   tasks:
   - name: select random winner
-    command: mysql -uansible -predhat showcase -e "select * from visitor where location = '{{ location }}' order by rand() limit 1;"
+    command: mysql -uansible -predhat showcase -e "select fullname, company from visitor where location = '{{ location }}' order by rand() limit 1;"
     register: tableoutput
 
   - name: display winner
