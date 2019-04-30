@@ -68,5 +68,10 @@ class Showcase extends CI_Controller {
 		$data['visitor_array'] = $this->showcase_model->get_report($location);
 		
 		$this->load->view('leads/index', $data);
-	}	
+	}
+	
+	public function tnc()
+	{
+		$this->load->view('tnc/index');
+	}
 }

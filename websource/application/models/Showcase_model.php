@@ -25,7 +25,8 @@ class Showcase_model extends CI_Model {
         $sql = "SELECT id, location, external_id, fullname, company, role, phone, email, timestamp ";
         $sql .= "FROM visitor ";
         if ($location != NULL) $sql .= "WHERE location = '" . $location . "' ";
-        $sql .= "ORDER BY timestamp DESC";
+        $sql .= "ORDER BY timestamp DESC ";
+        if ($location != NULL) $sql .= "LIMIT 50"
         $query = $this->db->query($sql);
         return $query->result_array();
     }

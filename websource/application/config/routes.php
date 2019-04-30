@@ -61,6 +61,8 @@ $route['flyer/(:any)'] = 'showcase/flyer/$1';
 $route['leads/(:any)'] = 'showcase/leads/$1';
 $route['leads'] = 'showcase/leads';
 
+$route['showcasetnc'] = 'showcase/tnc';
+
 $route['slideshow/(:any)'] = 'showcase/slideshow/$1';
 
 $route['(:any)'] = 'showcase';
