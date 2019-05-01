@@ -3,8 +3,10 @@
 # Variables from Tower Survey:
 # visitor_fullname
 # visitor_company
+# visttor_role
+# visitor_phone
 # visitor_email
-# Location options: sc-akl / sc-wtn / sc-chch / golfday
+# Location options: sc-akl / sc-wtn / sc-chch / sc-test / golfday
 - name: Photobooth - Capture Photo
   hosts: localhost
   gather_facts: no
@@ -18,6 +20,13 @@
   - name: generate unique id
     shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
     register: uniqueid
+
+  # Clear previous photo output
+  - name: cleare previous photo output
+    copy:
+      src: "/usr/share/showcase/blank.jpg"
+      dest: "/tmp/output_append.jpg"
+      mode: u=rw,g=rw,o=rw
 
   # Playback counting down video
   - name: playback countdown
