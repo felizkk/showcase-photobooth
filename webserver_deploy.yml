@@ -1,0 +1,95 @@
+---
+- name: Install/Update Webserver Packages
+  hosts: "{{ target_host_name }}*"
+  become: yes
+  become_method: sudo
+
+  vars:
+    - http_port: 80
+    - apache_max_keep_alive_requests: 115
+    - ntpserver: 0.nz.pool.ntp.org
+
+  tasks:
+  # Yum is the package manager of CentOS and RHEL
+  # Have a look at the conditional syntax below, we have both and and or statements
+  - name: install apache on RHEL7 or CentOS
+    yum:
+      name:
+        - httpd
+        - php
+        - php-mysql
+        - libsemanage-python
+        - ntp
+      state: latest
+    when: (ansible_distribution == "RedHat" and ansible_distribution_major_version == "7") or 
+          (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7")
+    notify: restart apache
+
+  - name: Set SELinux to allow httpd to connect to external database
+    seboolean:
+      name: httpd_can_network_connect
+      state: yes
+      persistent: yes
+    when: (ansible_distribution == "RedHat" and ansible_distribution_major_version == "7") or 
+          (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7")
+    notify: restart apache
+
+  # A different when conditional syntax
+  # Apt is the package manager of Ubuntu
+  - name: install apache on Ubuntu
+    apt:
+      name:
+        - httpd
+        - php
+        - php-mysql
+        - ntp
+      state: latest
+    when:
+      - ansible_distribution == "Ubuntu"
+    notify: restart apache
+
+  - name: start apache
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - name: enable http port {{ http_port }}
+    firewalld:
+      port: "{{ http_port }}/tcp"
+      state: enabled
+      permanent: true
+    notify: restart firewall
+
+  - name: start ntp 
+    service:
+      name: ntpd
+      state: started
+      enabled: yes
+
+  - name: update ntp config
+    template:
+      src: templates/ntp.conf.j2
+      dest: /etc/ntp.conf
+    notify: restart ntp
+
+  - name: update apache config file
+    template:
+      src: templates/httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: restart apache
+
+  handlers:
+  - name: restart firewall
+    service:
+      name: firewalld
+      state: restarted
+  - name: restart apache
+    service:
+      name: httpd
+      state: restarted
+  - name: restart ntp
+    service:
+      name: ntpd
+      state: restarted
+...

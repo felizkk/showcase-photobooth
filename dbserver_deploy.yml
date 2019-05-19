@@ -1,0 +1,50 @@
+---
+- name: Install/Update DBServer Packages 
+  hosts: "{{ target_host_name }}*"
+  become: yes
+  become_method: sudo  
+
+  vars:
+    - ntpserver: "0.nz.pool.ntp.org"
+
+  tasks:
+  - name: install mysql server, mysql-python, and ntp
+    yum:
+      name:
+        - mariadb-server
+        - MySQL-python
+        - ntp
+      state: present
+
+  - name: start mysql and ntp
+    service:
+      name: "{{ item }}" 
+      state: started
+      enabled: yes
+    with_items:
+      - mariadb
+      - ntpd
+
+  - name: enable mysql port 3306
+    firewalld:
+      port: "3306/tcp"
+      state: enabled
+      permanent: true
+    notify: restart firewall
+
+  - name: update ntp config
+    template:
+      src: templates/ntp.conf.j2
+      dest: /etc/ntp.conf
+    notify: restart ntp
+
+  handlers:
+  - name: restart firewall 
+    service:
+      name: firewalld
+      state: restarted
+  - name: restart ntp
+    service:
+      name: ntpd
+      state: restarted
+...
