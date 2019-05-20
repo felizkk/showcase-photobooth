@@ -1,0 +1,35 @@
+---
+- name: Deploy New Website Application Parts to Webserver
+  hosts: showcase-webserver-01
+  gather_facts: no
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: copy websource directory
+    copy:
+      src: websource
+      path: /var/www/
+
+  - name: remove html directory
+    file:
+      path: /var/www/html
+      state: absent
+  
+  - name: rename websource directory to html
+    command: "mv /var/www/websource /var/www/html"
+  
+  #- name: clear application directory
+  #  file: 
+  #    path: "/var/www/html/application"
+  #    state: "{{ item }}"
+  #  with_items:
+  #    - absent
+  #    - directory
+
+  #- name: update website files - application parts
+  #  copy:
+  #    src: "websource/application"
+  #    dest: "/var/www/html/"
+  #    mode: u=rw,g=r,o=r
+...
