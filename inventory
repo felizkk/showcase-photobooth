@@ -1,14 +1,6 @@
-[azure]
-showcase-webserver-01
-showcase-dbserver
+[server]
+showcase-photobooth
 
-[azure:vars]
-ansible_ssh_user=feliz
-ansible_ssh_private_key_file=/home/feliz/ansible/ssh-keys/id_rsa-private.ppk
-
-[showcase]
-showcase.fedorahost
-
-[showcase:vars]
+[server:vars]
 ansible_ssh_user=root
-ansible_ssh_private_key_file=/home/feliz/.ssh/id_rsa
+ansible_ssh_pass=redhat

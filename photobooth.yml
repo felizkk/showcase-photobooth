@@ -1,12 +1,13 @@
 ---
 # We are using Ansible Tower for the data entry
 # Variables from Tower Survey:
-# visitor_fullname
-# visitor_company
-# visttor_role
-# visitor_phone
-# visitor_email
-# Location options: sc-akl / sc-wtn / sc-chch / sc-test / golfday
+# - visitor_fullname
+# - visitor_company
+# - visttor_role
+# - visitor_phone
+# - visitor_email
+# - location: sc-akl / sc-wtn / sc-chch / sc-test / golfday
+# - print_flyer: Yes / No
 - name: Photobooth - Capture Photo
   hosts: localhost
   gather_facts: no
@@ -21,7 +22,7 @@
     shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
     register: uniqueid
 
-  # Clear previous photo output
+  # Clear previous photo output by replacing it with blank with "GET READY" text
   - name: cleare previous photo output
     copy:
       src: "/usr/share/showcase/blank.jpg"
@@ -38,10 +39,6 @@
     wait_for: timeout=7
   - name: play shutter sound
     shell: "export DISPLAY=:0; /bin/play {{ showcase_home }}/shutter.aiff"
-  #  become: yes
-  #  become_method: su
-  #  become_user: feliz
-  #  shell: "export DISPLAY=:0; /usr/bin/vlc {{ showcase_home }}/shutter.aiff"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
@@ -120,7 +117,7 @@
     #- webserver_public_ip: "{{ hostvars['showcase-webserver-01']['public_ip'] }}"
     - webserver_public_ip: "www.redhatnz.com"
     - unique_id: "{{ lookup('file', '/tmp/new_unique_id.txt') }}"
-    - printoutpath: "/home/feliz/showcase/printout.png"
+    - printoutpath: "/home/feliz/printout.png"
     - print_flyer: "No"
     - printer_name: "L310"
   

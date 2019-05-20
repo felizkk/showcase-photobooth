@@ -1,0 +1,46 @@
+---
+- name: Photobooth - Prepare Tower Server with Required Software
+  hosts: showcase-photobooth
+  gather_facts: no
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: Install RPM GPG Key from Nux
+    rpm_key:
+      key: http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+      state: present
+
+  - name: Install Nux Dextop Repo
+    yum:
+      name: http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+      state: present
+
+  - name: Install ffmpeg, ffmpeg-devel, VLC, Chromium, and ImageMagick
+    yum:
+      name:
+        - ffmpeg
+        - ffmpeg-devel
+        - chromium
+        - vlc
+        - ImageMagick
+      state: present
+  
+  - name: Remove existing showcase assets files
+    file:
+      path: /usr/share/showcase
+      state: absent
+
+  - name: Copy new showcase assets files
+    copy:
+      src: photobooth-assets
+      dest: /usr/share/
+
+  - name: Rename showcase assets directory
+    command: "mv /usr/share/photobooth-assets /usr/share/showcase"
+
+  - name: Make unique_id script file executable
+    file:
+      path: /usr/share/showcase/unique_id.sh
+      mode: u=rwx,g=rx,o=rx
+...
