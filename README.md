@@ -36,13 +36,13 @@ Ansible Tower is used as the "remote control" and data entry via Tower Survey.
 2. The PC will need 2 connections. One for the internet (software install and to cloud servers), one for the MJPEG stream from the camera
 3. CentOS 7 installation, with post-install updates (# yum udpate)
 4. Desktop GUI installation
-   # yum groupinstall "Server with GUI"
+   (root)# yum groupinstall "Server with GUI"
 5. Set-default target to graphical/GUI 
-   # systemctl set-default graphical
+   (root)# systemctl set-default graphical
 6. After reboot, Tower GUI will asks to create a normal user. So do this
 7. Install EPEL repo for ansible installation
-   # yum install epel-release
-   # yum install ansible
+   (root)# yum install epel-release
+   (root)# yum install ansible
 8. Install Ansible Tower and provide your Tower license key
    Follow the steps here: https://docs.ansible.com/ansible-tower/latest/html/quickinstall/prepare.html
 9. Disable Tower Job Isolation (Settings - Jobs - Enable Job Isolation: Off)
