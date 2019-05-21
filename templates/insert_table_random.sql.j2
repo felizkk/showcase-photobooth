@@ -1,3 +1,0 @@
-LOCK TABLES `visitor` WRITE;
-INSERT INTO `visitor` (`location`,`external_id`, `fullname`, `company`, `role`, `phone`, `email`, `timestamp`) VALUES ('{{ location }}', '{{ uniqueid.stdout_lines[0] }}','{{ randomname.stdout_lines[0] }}','{{ randomcompany.stdout_lines[0] }}', 'Random Employee', '021-12345678', '{{ randomemail.stdout_lines[0] }}', '{{ ansible_date_time.epoch }}');
-UNLOCK TABLES;
