@@ -1,6 +1,6 @@
 ---
 - name: Install Webserver Packages
-  hosts: showcase-photobooth
+  hosts: showcase-webserver-01
   become: yes
   become_method: sudo
 
@@ -12,7 +12,7 @@
     - dbserver_ip_address: "10.0.0.5"
 
   tasks:
-  - name: install apache and http components
+  - name: install http and php components
     yum:
       name:
         - httpd
@@ -30,7 +30,7 @@
       persistent: yes
     notify: restart apache
 
-  - name: start apache
+  - name: start http
     service:
       name: httpd
       state: started
@@ -68,19 +68,6 @@
       line: "{{ dbserver_ip_address }} dbserver1"
       state: present
 
-  - name: copy websource directory
-    copy:
-      src: websource
-      path: /var/www/
-
-  - name: remove html directory
-    file:
-      path: /var/www/html
-      state: absent
-  
-  - name: rename websource directory to html
-    command: "mv /var/www/websource /var/www/html"
-  
   handlers:
   - name: restart firewall
     service:

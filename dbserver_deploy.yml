@@ -1,6 +1,6 @@
 ---
 - name: Install/Update DBServer Packages 
-  hosts: "{{ target_host_name }}*"
+  hosts: showcase-dbserver
   become: yes
   become_method: sudo  
 

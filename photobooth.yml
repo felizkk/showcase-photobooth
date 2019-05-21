@@ -13,6 +13,7 @@
   gather_facts: no
 
   vars:
+    # Update this MJPEG URL based on your actual IP Camera
     - mpjeg_url: "http://192.168.4.245:8008"
     - showcase_home: "/usr/share/showcase"
 

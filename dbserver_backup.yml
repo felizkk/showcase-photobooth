@@ -1,10 +1,19 @@
+---
 - name: Photobooth - Backup Database
   hosts: showcase-dbserver
   gather_facts: yes
   become: yes
   become_method: sudo
 
+  vars:
+    - backup_path: "/home/feliz/db_backup"
+
   tasks:
+  - name: create backup directory if not exist
+    file:
+      path: "{{ backup_path }}"
+      state: directory
+    
   - name: backup database entries
     mysql_db:
       name: showcase
@@ -13,5 +22,5 @@
       login_unix_socket: "/var/lib/mysql/mysql.sock"
       config_file: "/etc/my.cnf"      
       state: dump
-      target: "/home/feliz/db_backup/backup_{{ ansible_date_time.epoch }}.sql"
+      target: "{{ backup_path }}/backup_{{ ansible_date_time.epoch }}.sql"
 ...

@@ -9,7 +9,7 @@
   - name: copy websource directory
     copy:
       src: websource
-      path: /var/www/
+      dest: /var/www/
 
   - name: remove html directory
     file:
@@ -18,18 +18,4 @@
   
   - name: rename websource directory to html
     command: "mv /var/www/websource /var/www/html"
-  
-  #- name: clear application directory
-  #  file: 
-  #    path: "/var/www/html/application"
-  #    state: "{{ item }}"
-  #  with_items:
-  #    - absent
-  #    - directory
-
-  #- name: update website files - application parts
-  #  copy:
-  #    src: "websource/application"
-  #    dest: "/var/www/html/"
-  #    mode: u=rw,g=r,o=r
 ...
