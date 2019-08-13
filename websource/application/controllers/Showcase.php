@@ -21,10 +21,14 @@ class Showcase extends CI_Controller {
 
 		if ($data['visitor_array'][0]['location'] == "sc-akl"  ||
 			$data['visitor_array'][0]['location'] == "sc-wtn"  ||
-			$data['visitor_array'][0]['location'] == "sc-chch" || 
+			$data['visitor_array'][0]['location'] == "sc-chch" ||
 			$data['visitor_array'][0]['location'] == "sc-test" )
 		{
 			$this->load->view('slideshow/showcase', $data);
+		}
+		else if ($data['visitor_array'][0]['location'] == "sparktech")
+		{
+			$this->load->view('slideshow/sparktech', $data);
 		}
 		else if ($data['visitor_array'][0]['location'] == "golfday")
 		{
@@ -45,6 +49,10 @@ class Showcase extends CI_Controller {
 			$data['visitor_row']['location'] == "sc-test" )
 		{
 			$this->load->view('flyer/showcase', $data);
+		}
+		else if ($data['visitor_row']['location'] == "sparktech")
+		{
+			$this->load->view('flyer/sparktech', $data);
 		}
 		else if ($data['visitor_row']['location'] == "golfday")
 		{

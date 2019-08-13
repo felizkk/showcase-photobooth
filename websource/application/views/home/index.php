@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Experience Ansible on Showcase</title>
+	<title>Ansible Photobooth</title>
 </head>
 <body style="background-color:black;">
 
