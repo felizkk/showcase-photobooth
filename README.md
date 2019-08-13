@@ -79,3 +79,10 @@ Ansible Tower is used as the "remote control" and data entry via Tower Survey.
 1. The Tower PC needs to be connected to a monitor, and the GUI needs to show real-time MJPEG stream (as mirror) using firefox, VLC media player (for countdown), and an a JPEG viewer (for recent photo result). You will need to resize those application windows accordingly.
 2. Another laptop is connected to another monitor, and running the photobooth slideshow from the internet
 
+# Apache Mod Rewrite and PHP Timezone
+1. Please ensure we enable rewrite on Apache config
+<Directory "/var/www/html">
+....
+AllowOverride All
+2. Please put the timezone info on /etc/php.ini
+date.timezone = Pacific/Auckland
