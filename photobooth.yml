@@ -10,6 +10,7 @@
 # - print_flyer: Yes / No
 - name: Photobooth - Capture Photo
   hosts: localhost
+  connection: local
   gather_facts: no
 
   vars:
@@ -24,7 +25,7 @@
     register: uniqueid
 
   # Clear previous photo output by replacing it with blank with "GET READY" text
-  - name: cleare previous photo output
+  - name: clear previous photo output
     copy:
       src: "/usr/share/showcase/blank.jpg"
       dest: "/tmp/output_append.jpg"
