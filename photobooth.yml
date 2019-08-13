@@ -10,7 +10,6 @@
 # - print_flyer: Yes / No
 - name: Photobooth - Capture Photo
   hosts: localhost
-  connection: local
   gather_facts: no
 
   vars:
