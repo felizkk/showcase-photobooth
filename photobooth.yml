@@ -8,6 +8,7 @@
 # - visitor_email
 # - location: sc-akl / sc-wtn / sc-chch / sc-test / golfday
 # - print_flyer: Yes / No
+# - play_sound : Yes / No
 - name: Photobooth - Capture Photo
   hosts: localhost
   gather_facts: no
@@ -16,7 +17,8 @@
     # Update this MJPEG URL based on your actual IP Camera
     - mpjeg_url: "http://192.168.4.245:8008"
     - showcase_home: "/usr/share/showcase"
-
+    - play_sound: "No"
+  
   tasks:
   # Generate unique id for visitor entry
   - name: generate unique id
@@ -40,6 +42,7 @@
     wait_for: timeout=7
   - name: play shutter sound
     shell: "export DISPLAY=:0; /bin/play {{ showcase_home }}/shutter.aiff"
+    when: play_sound == "Yes"
 
   # Capture jpeg from camera (mjpeg stream)
   - name: capture jpeg
