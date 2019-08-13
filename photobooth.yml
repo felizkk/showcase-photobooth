@@ -18,6 +18,7 @@
     - mpjeg_url: "http://192.168.4.245:8008"
     - showcase_home: "/usr/share/showcase"
     - play_sound: "No"
+    - print_flyer: "No"
   
   tasks:
   # Generate unique id for visitor entry
