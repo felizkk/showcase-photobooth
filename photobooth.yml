@@ -20,7 +20,7 @@
   tasks:
   # Generate unique id for visitor entry
   - name: generate unique id
-    shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }}"
+    shell: "{{ showcase_home }}/unique_id.sh {{ visitor_fullname }} > /tmp/new_unique_id.txt"
     register: uniqueid
 
   # Clear previous photo output by replacing it with blank with "GET READY" text
